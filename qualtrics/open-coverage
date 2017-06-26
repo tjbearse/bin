@@ -1,0 +1,9 @@
+#!/bin/bash
+
+coverage=$(find . -type d -iname coverage -maxdepth 2 | head -1)
+echo $coverage
+while read line
+do
+	target=$(basename "$line")
+	find "$coverage" -type f -name "${target}.html" | tr '\n' '\0' | xargs -0 -n 1 open
+done < "${1:-/dev/stdin}"
